@@ -5,41 +5,61 @@ const fs = require("fs");
 
 console.log(process.argv.length);
 
-if (process.argv.length >= 3) {
+// args
+// 0 node location
+// 1 current location
+// 2 image location
+// 3 new name
+// 4 car type
+// 5 decal name
+// 6 write JSON
+
+if (process.argv.length = 4) {
     console.log(process.argv[2]);
-
-    var logoLoc = process.argv[2];
-
-    draw(logoLoc);
+    console.log(process.argv[3]);
+    draw(process.argv[2], process.argv[3]);
+} else if (process.argv.length = 5) {
+    console.log(process.argv[2]);
+    console.log(process.argv[3]);
+    console.log(process.argv[4]);
+    draw(process.argv[2], process.argv[3], process.argv[4]);
+} else if (process.argv.length = 6) {
+    console.log(process.argv[2]);
+    console.log(process.argv[3]);
+    console.log(process.argv[4]);
+    console.log(process.argv[5]);
+    draw(process.argv[2], process.argv[3], process.argv[4], process.argv[5]);
+} else if (process.argv.length >= 7) {
+    console.log(process.argv[2]);
+    console.log(process.argv[3]);
+    console.log(process.argv[4]);
+    console.log(process.argv[5]);
+    console.log(process.argv[6]);
+    draw(process.argv[2], process.argv[3], process.argv[4], process.argv[5], process.argv[6])
 }
 
-async function draw(logoLoc) {
-    var logoName = logoLoc.substring(0, logoLoc.indexOf("."));
-
+async function draw(logoLoc, logoName, carType = 22, decalName = "baseDecal", writeJson = true) {
     console.log(logoName);
 
-    var carType = "22";
     var skinLocation = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\rocketleague\\Binaries\\Win64\\bakkesmod\\data\\acplugin\\DecalTextures";
 
     var drawLocations = require("./img/" + carType + "/drawlocations.json");
 
-    let baseDecal = await jimp.read("./img/" + carType + "/basedecal.png").catch(function (err) {
+    let baseDecal = await jimp.read("./img/" + carType + "/" + decalName + ".png").catch(function (err) {
         console.log(err);
         return;
      });
 
-    let baseClone = baseDecal.clone();
+    var drawLocations = require("./img/" + carType + "/drawlocations.json");
+
+    //let decalNames = require("./img/" + carType + "/decalnames.json");
 
     let bodyDecal = await jimp.read("./img/" + carType + "/body.png").catch(function (err) {
         console.log(err);
         return;
     });
 
-    //let drawTemplate = await jimp.read("./img/" + carType + "/drawlocations.png").catch(function (err) {
-    //    console.log(err);
-    // });
-
-    console.log("loaded locations");
+    //console.log("loaded locations");
 
     let logo = await jimp.read(logoLoc).catch(function (err) {
             console.log(err);
@@ -100,18 +120,11 @@ async function draw(logoLoc) {
             }
           });
 
-        blackBox.write(skinLocation + "/" + logoName + "/blackbox.png");
+        //blackBox.write(skinLocation + "/" + logoName + "/blackbox.png");
 
         //blackBox.write("./" + logoName + "/boxpost.png");
         //baseDecal.mask(blackBox, xLoc, yLoc);
         baseDecal.composite(blackBox, xLoc, yLoc);
-        
-        bodyDecal.composite(logoClone, xLoc, yLoc);/*, {
-            //mode: jimp.BLEND_DIFFERENCE,
-            mode: jimp.BLEND_OVERLAY,
-            opacitySource: 1,
-            opacityDest: 1
-        });*/
 
         baseDecal.scan(xLoc, yLoc, blackBox.bitmap.width, blackBox.bitmap.height, function(x, y, idx) {
             // x, y is the position of this pixel on the image
@@ -130,10 +143,13 @@ async function draw(logoLoc) {
                 this.bitmap.data[idx + 2] = 0;
                 this.bitmap.data[idx + 3] = 0;
             }
-          });
+        });
+       
+        bodyDecal.composite(logoClone, xLoc, yLoc);
     }
 
-    baseDecal.write(skinLocation + "/" + logoName + "/skin.png");
+    baseDecal.write(skinLocation + "/" + logoName + "/" + decalName + ".png");
+
     bodyDecal.write(skinLocation + "/" + logoName + "/diffuse.png");
 
     const jsonVal = {};
@@ -143,7 +159,7 @@ async function draw(logoLoc) {
             "SkinID": 0,
             "Body": {
                 "Diffuse": logoName + "/diffuse.png",
-                "Skin": logoName + "/skin.png"
+                "Skin": logoName + "/" + decalName + ".png"
             }
     };
 
@@ -167,4 +183,3 @@ async function draw(logoLoc) {
     */
     //drawTemplate.write("./" + logoName + "/skin.png");
 }
-

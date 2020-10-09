@@ -1,0 +1,4 @@
+Rename any decal you like to basedecal.png to be used as the base
+If you want to use a custom body, you may use one as body.png
+
+If you don't want to use one of the locations, you can comment it out with /* before the start and */ at the end of the location in drawlocations.json
