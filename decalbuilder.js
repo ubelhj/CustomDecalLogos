@@ -46,15 +46,9 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
         var rotation = drawLocations[i].rotation;
 
         logoClone.rotate(rotation);
+        logoClone.resize(size, size);
 
-        let blackBox = await new jimp(size, size, 0x000000ff, (err, image) => {
-            if (err) {
-                throw err;
-            }
-        });
-
-
-        let redBox = await new jimp(size, size, 0xff0000ff, (err, image) => {
+        /*let blackBox = await new jimp(size, size, 0x000000ff, (err, image) => {
             if (err) {
                 throw err;
             }
@@ -63,13 +57,11 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
         console.log(xLoc);
         console.log(yLoc);
         console.log(size);
-
-        logoClone.resize(size, size);
-
+        
         //blackBox.write("./" + logoName + "/boxpre.png");
         blackBox.mask(logoClone);
         //blackBox.opaque();
-
+        //blackBox.write(skinLocation + "/" + logoName + "/blackboxpre.png");
         blackBox.scan(0, 0, blackBox.bitmap.width, blackBox.bitmap.height, function(x, y, idx) {
             // x, y is the position of this pixel on the image
             // idx is the position start position of this rgba tuple in the bitmap Buffer
@@ -94,7 +86,29 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
         //blackBox.write(skinLocation + "/" + logoName + "/blackbox.png");
 
         //blackBox.write("./" + logoName + "/boxpost.png");
-        //baseDecal.mask(blackBox, xLoc, yLoc);
+        //baseDecal.mask(blackBox, xLoc, yLoc);*/
+        let blackBox = logoClone.clone();
+        blackBox.scan(0, 0, blackBox.bitmap.width, blackBox.bitmap.height, function(x, y, idx) {
+            // x, y is the position of this pixel on the image
+            // idx is the position start position of this rgba tuple in the bitmap Buffer
+            // this is the image
+
+            var alpha = this.bitmap.data[idx + 3];
+
+            // ensures proper rgb values of logo
+            if (alpha > 50) {
+                this.bitmap.data[idx] = 0;
+                this.bitmap.data[idx + 1] = 0;
+                this.bitmap.data[idx + 2] = 0;
+                this.bitmap.data[idx + 3] = 255;
+            } else {
+                this.bitmap.data[idx] = 255;
+                this.bitmap.data[idx + 1] = 0;
+                this.bitmap.data[idx + 2] = 0;
+                this.bitmap.data[idx + 3] = 0;
+            }
+          });
+
         baseDecal.composite(blackBox, xLoc, yLoc);
 
         baseDecal.scan(xLoc, yLoc, blackBox.bitmap.width, blackBox.bitmap.height, function(x, y, idx) {
@@ -103,12 +117,12 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
             // this is the image
 
             var alpha = this.bitmap.data[idx + 3];
-            /*var isBlack = this.bitmap.data[idx] == 0 &&
-                this.bitmap.data[idx + 1] == 0 &&
-                this.bitmap.data[idx + 2] == 0;*/
+            var isBlack = this.bitmap.data[idx] <= 10 &&
+                this.bitmap.data[idx + 1] <= 10 &&
+                this.bitmap.data[idx + 2] <= 10;
 
             // ensures proper rgb values of logo
-            if (alpha < 250) {
+            if (isBlack && alpha < 250) {
                 this.bitmap.data[idx] = 255;
                 this.bitmap.data[idx + 1] = 0;
                 this.bitmap.data[idx + 2] = 0;

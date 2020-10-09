@@ -22,7 +22,7 @@ if (process.argv.length == 5) {
 }
 
 async function run(logoLoc, logoName, carType) {
-    //var carType = typeof carType  !== 'undefined' ?  carType  : 22;
+    var carType = typeof carType  !== 'undefined' ?  carType  : 22;
 
     let decalNames = require("./img/" + carType + "/decalnames.json");
 
