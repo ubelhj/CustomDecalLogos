@@ -10,43 +10,29 @@ console.log(process.argv.length);
 // 2 image location
 // 3 new name
 // 4 car type
-if (process.argv.length = 4) {
-    console.log(process.argv[2]);
-    console.log(process.argv[3]);
-    run(process.argv[2], process.argv[3]);
-} else if (process.argv.length = 5) {
+if (process.argv.length == 5) {
     console.log(process.argv[2]);
     console.log(process.argv[3]);
     console.log(process.argv[4]);
     run(process.argv[2], process.argv[3], process.argv[4]);
+} else if (process.argv.length == 4) {
+    console.log(process.argv[2]);
+    console.log(process.argv[3]);
+    run(process.argv[2], process.argv[3]);
 }
 
 async function run(logoLoc, logoName, carType) {
-    var carType = typeof carType  !== 'undefined' ?  carType  : 22;
+    //var carType = typeof carType  !== 'undefined' ?  carType  : 22;
 
     let decalNames = require("./img/" + carType + "/decalnames.json");
 
-    let jsonVal = [];
-    let creator = require("./CreateDecal");
+    let jsonVal = {};
+
+    let creator = require("./decalbuilder");
 
     let skinLocation = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\rocketleague\\Binaries\\Win64\\bakkesmod\\data\\acplugin\\DecalTextures";
 
     let dir = skinLocation + "/" + logoName + "/";
-
-    await async.each(decalNames, function(decalName, callback) {
-        creator.draw(logoLoc, logoName, carType, decalName, false);
-        jsonVal[decalName] = {
-            "BodyID": parseInt(carType),
-                "SkinID": 0,
-                "Body": {
-                    "Diffuse": logoName + "/diffuse.png",
-                    "Skin": logoName + "/" + decalName + ".png"
-                }
-            }
-        callback();
-    }, function(err){
-
-    });
 
     // create new directory
     try {
@@ -61,33 +47,33 @@ async function run(logoLoc, logoName, carType) {
         console.log(err);
     }
 
-    fs.writeFile(dir + logoName + ".json", JSON.stringify(jsonVal), (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log("JSON data is saved.");
-    });
-}
-
-async function drawAll(decalNames) {
-    
-    let creator = require("./CreateDecal");
-    var jsonArray = [decalNames.size];
-    var counter = 0;
-    for (let i = 0; i < decalNames.size; i++) {
-        creator.draw(logoLoc, logoName, carType, decalNames[i], false).then(function (err, result) {
-            jsonVal[decalNames[i]] = {
+    async.eachSeries(decalNames, function(decalName, callback) {
+        creator.draw(logoLoc, logoName, carType, decalName, false).then(function() {
+            jsonVal[decalName] = {
                 "BodyID": parseInt(carType),
                     "SkinID": 0,
                     "Body": {
                         "Diffuse": logoName + "/diffuse.png",
-                        "Skin": logoName + "/" + decalNames[i] + ".png"
+                        "Skin": logoName + "/" + decalName + ".png"
                     }
                 }
-            if(counter == jsonArray.length - 1) {
-                return jsonArray;
-            }
-            counter++;
+                //console.log(jsonVal);
+            callback();
         });
-    }
+    }, function(err){
+        if (err) {
+            throw err;
+        }
+
+        console.log(jsonVal);
+        console.log(JSON.stringify(jsonVal));
+        fs.writeFile(dir + logoName + ".json", JSON.stringify(jsonVal), (err) => {
+            if (err) {
+                throw err;
+            }
+            console.log("JSON data is saved.");
+        });
+    });
+
+    
 }
