@@ -38,8 +38,16 @@ if (process.argv.length = 4) {
     draw(process.argv[2], process.argv[3], process.argv[4], process.argv[5], process.argv[6])
 }
 
-async function draw(logoLoc, logoName, carType = 22, decalName = "baseDecal", writeJson = true) {
+async function draw(logoLoc, logoName, carType, decalName, writeJson) {
+    var carType = typeof carType  !== 'undefined' ?  carType  : 22;
+    var decalName = typeof decalName  !== 'undefined' ?  decalName  : "baseDecal";
+    var writeJson = typeof writeJson  !== 'undefined' ?  writeJson  : true;
+
+    console.log(logoLoc);
     console.log(logoName);
+    console.log(carType);
+    console.log(decalName);
+    console.log(writeJson);
 
     var skinLocation = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\rocketleague\\Binaries\\Win64\\bakkesmod\\data\\acplugin\\DecalTextures";
 
@@ -163,7 +171,7 @@ async function draw(logoLoc, logoName, carType = 22, decalName = "baseDecal", wr
             }
     };
 
-     fs.writeFile(skinLocation + "/" + logoName + "/" + logoName + ".json", JSON.stringify(jsonVal), (err) => {
+    await fs.writeFile(skinLocation + "/" + logoName + "/" + logoName + ".json", JSON.stringify(jsonVal), (err) => {
         if (err) {
             throw err;
         }
@@ -183,3 +191,5 @@ async function draw(logoLoc, logoName, carType = 22, decalName = "baseDecal", wr
     */
     //drawTemplate.write("./" + logoName + "/skin.png");
 }
+
+module.exports.draw = draw;
