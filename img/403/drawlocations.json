@@ -1,0 +1,18 @@
+[
+    {
+        "location": "hood",
+        "shouldDraw": true,
+        "x": 855,
+        "y": 390,
+        "size": 357,
+        "rotation" : 270
+    },
+    {
+        "location": "roof",
+        "shouldDraw": true,
+        "x": 69,
+        "y": 456,
+        "size": 297,
+        "rotation": 90
+    }
+]

@@ -1,11 +1,15 @@
 [
     {
+        "location": "hood",
+        "shouldDraw": true,
         "x": 496,
         "y": 567,
         "size": 273,
         "rotation" : 180
     },
     {
+        "location": "roof",
+        "shouldDraw": true,
         "x": 1272,
         "y": 819,
         "size": 300,

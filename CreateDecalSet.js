@@ -66,7 +66,7 @@ async function run(logoLoc, logoName, carType) {
         }
 
         console.log(jsonVal);
-        console.log(JSON.stringify(jsonVal));
+        console.log(JSON.stringify(jsonVal, null, 2));
         fs.writeFile(dir + logoName + ".json", JSON.stringify(jsonVal), (err) => {
             if (err) {
                 throw err;
