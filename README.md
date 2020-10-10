@@ -29,7 +29,7 @@ You can select it in Alphaconsole as `octaneStripesWithCircle - stripes`
 This creates a set of decals with your logo for the same car  
 Makes one decal for each base decal named in CarID/decalnames.json  
 Usage:  
-`node createdecalset.js logolocation.png decalname carID` 
+`node createdecalset.js logolocation.png decalname carID`  
 There are only two required arguments, the first two  
 The first argument `logolocation.png` is your logo to add to the decal  
 The second is the name of your new decal. In Alphaconsole it will display as `decalname - basedecal`  
