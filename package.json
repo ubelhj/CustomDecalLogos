@@ -1,0 +1,24 @@
+{
+  "name": "customdecals",
+  "version": "1.0.0",
+  "description": "Puts logos on rocket league decals automatically",
+  "main": "CreateDecal.js",
+  "dependencies": {
+    "async": "^3.2.0",
+    "jimp": "^0.16.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ubelhj/CustomDecalLogos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ubelhj/CustomDecalLogos/issues"
+  },
+  "homepage": "https://github.com/ubelhj/CustomDecalLogos#readme"
+}
