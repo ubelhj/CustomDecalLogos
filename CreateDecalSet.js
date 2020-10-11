@@ -1,5 +1,6 @@
 const fs = require("fs");
 var async = require("async");
+const defaultvalues = require("./defaultvalues.json");
 
 console.log(process.argv);
 console.log(process.argv.length);
@@ -22,15 +23,11 @@ if (process.argv.length == 5) {
 }
 
 async function run(logoLoc, logoName, carType) {
-    var carType = typeof carType  !== 'undefined' ?  carType  : 22;
+    var carType = typeof carType  !== 'undefined' ?  carType  : defaultvalues.carID;
 
     let decalNames = require("./img/" + carType + "/decalnames.json");
 
-    let jsonVal = {};
-
-    let creator = require("./decalbuilder");
-
-    let skinLocation = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\rocketleague\\Binaries\\Win64\\bakkesmod\\data\\acplugin\\DecalTextures";
+    let skinLocation = defaultvalues.skinlocation;
 
     let dir = skinLocation + "/" + logoName + "/";
 
@@ -46,6 +43,9 @@ async function run(logoLoc, logoName, carType) {
     } catch (err) {
         console.log(err);
     }
+
+    let jsonVal = {};
+    let creator = require("./decalbuilder");
 
     async.eachSeries(decalNames, function(decalName, callback) {
         creator.draw(logoLoc, logoName, carType, decalName, false).then(function() {

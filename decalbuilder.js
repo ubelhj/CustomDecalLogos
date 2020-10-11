@@ -1,9 +1,10 @@
 const jimp = require("jimp");
 const fs = require("fs");
+const defaultvalues = require("./defaultvalues.json");
 
 async function draw(logoLoc, logoName, carType, decalName, writeJson) {
-    var carType = typeof carType  !== 'undefined' ?  carType  : 22;
-    var decalName = typeof decalName  !== 'undefined' ?  decalName  : "baseDecal";
+    var carType = typeof carType  !== 'undefined' ?  carType  : defaultvalues.carID;
+    var decalName = typeof decalName  !== 'undefined' ?  decalName  : defaultvalues.decal;
     var writeJson = typeof writeJson  !== 'undefined' ?  writeJson  : true;
 
     console.log(logoLoc);
@@ -12,7 +13,7 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
     console.log(decalName);
     console.log(writeJson);
 
-    var skinLocation = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\rocketleague\\Binaries\\Win64\\bakkesmod\\data\\acplugin\\DecalTextures";
+    var skinLocation = defaultvalues.skinlocation;
 
     var drawLocations = require("./img/" + carType + "/drawlocations.json");
 
@@ -25,7 +26,7 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
 
     //let decalNames = require("./img/" + carType + "/decalnames.json");
 
-    let bodyDecal = await jimp.read("./img/" + carType + "/body.png").catch(function (err) {
+    let bodyDecal = await jimp.read("./img/" + carType + "/" + defaultvalues.bodytexture).catch(function (err) {
         console.log(err);
         return;
     });
