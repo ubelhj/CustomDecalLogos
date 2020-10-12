@@ -1,0 +1,43 @@
+[
+    {
+        "location": "hood",
+        "shouldDraw": true,
+        "x": 1181,
+        "y": 1503,
+        "size": 258,
+        "rotation" : 0
+    },
+    {
+        "location": "roof",
+        "note": "This one doesn't draw right, gets vertically stretched. No idea why",
+        "shouldDraw": false,
+        "x": 1154,
+        "y": 1011,
+        "size": 312,
+        "rotation": 0
+    },
+    {
+        "location": "right side",
+        "shouldDraw": true,
+        "x": 709,
+        "y": 1121,
+        "size": 177,
+        "rotation": 270
+    },
+    {
+        "location": "left side",
+        "shouldDraw": true,
+        "x": 1725,
+        "y": 1121,
+        "size": 177,
+        "rotation": 90
+    },
+    {
+        "location": "bed",
+        "shouldDraw": true,
+        "x": 1121,
+        "y": 489,
+        "size": 381,
+        "rotation": 180
+    }
+]
