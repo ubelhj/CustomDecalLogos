@@ -34,7 +34,7 @@
     },
     {
         "location": "bed",
-        "shouldDraw": true,
+        "shouldDraw": false,
         "x": 1121,
         "y": 489,
         "size": 381,
