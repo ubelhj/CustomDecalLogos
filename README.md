@@ -6,7 +6,7 @@ Either make one decal or a full car set (based on the decals I have available to
 
 ## Usage
 ### First install
-First make sure you have node.js installed  
+First make sure you have node.js installed [https://nodejs.org/en/](https://nodejs.org/en/)   
 Open a powershell or command line window in the same directory as the .js files.  
 Before the first use, type `npm install`. This will install Jimp and Async, the only dependencies for this project.  
 Next open your `defaultvalues.json`. Modify this to point at your decal folder.  
@@ -27,6 +27,7 @@ The third is optional, and is the ID of the car. You can find these in the img/ 
 The fourth is also optional, and is the name of the decal. You can find these in img/carID. Just do the name, no .png. It defaults to basedecal, which is an empty decal.
 The fifth is also optional, and decides whether to write a JSON file. This is only really there for createdecalset, so I don't recommend changing it. It defaults to true.  
 
+#### Examples  
 `node createdecal.js heart.png breakoutHeart` creates a blank decal with heart.png on it for Breakout.  
 You can select it in Alphaconsole as `breakoutHeart - basedecal`  
 `node createdecal.js circle.png octaneStripesWithCircle 23 stripes` creates the stripes decal with circle.png on it for Octane  
@@ -42,9 +43,10 @@ The first argument `logolocation.png` is your logo to add to the decal
 The second is the name of your new decal. In Alphaconsole it will display as `decalname - basedecal`  
 The third is optional, and is the ID of the car. You can find these in the img/ folder. Currently supported are 22 (Breakout), 23 (Octane), and 403 (Dominus). It defaults to Breakout if there is no input.  
 
+#### Examples  
 `node createdecalset.js heart.png breakoutHeart` creates a set of decals, all with heart.png on top. They will be named similarly in alphaconsole.  
 To name a few, you will have `breakoutHeart - stripes` and `breakoutHeart - basedecal`  
-`node createdecalset.js circle.png octaneCircle` creates a set of octane decals with circle.png on top.
+`node createdecalset.js circle.png octaneCircle 23` creates a set of octane decals with circle.png on top.
 
 ### Usable CarIDs
 22 = Breakout (default)  
