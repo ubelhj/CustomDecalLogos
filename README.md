@@ -6,7 +6,7 @@ Either make one decal or a full car set (based on the decals I have available to
 
 ## Usage
 ### First install
-First make sure you have node.js installed  
+First make sure you have node.js installed [https://nodejs.org/en/](https://nodejs.org/en/)   
 Open a powershell or command line window in the same directory as the .js files.  
 Before the first use, type `npm install`. This will install Jimp and Async, the only dependencies for this project.  
 Next open your `defaultvalues.json`. Modify this to point at your decal folder.  
@@ -44,7 +44,7 @@ The third is optional, and is the ID of the car. You can find these in the img/ 
 
 `node createdecalset.js heart.png breakoutHeart` creates a set of decals, all with heart.png on top. They will be named similarly in alphaconsole.  
 To name a few, you will have `breakoutHeart - stripes` and `breakoutHeart - basedecal`  
-`node createdecalset.js circle.png octaneCircle` creates a set of octane decals with circle.png on top.
+`node createdecalset.js circle.png octaneCircle 23` creates a set of octane decals with circle.png on top.
 
 ### Usable CarIDs
 22 = Breakout (default)  
