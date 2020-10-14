@@ -18,7 +18,7 @@
     },
     {
         "location": "right side",
-        "shouldDraw": true,
+        "shouldDraw": false,
         "x": 709,
         "y": 1121,
         "size": 177,
@@ -26,7 +26,7 @@
     },
     {
         "location": "left side",
-        "shouldDraw": true,
+        "shouldDraw": false,
         "x": 1725,
         "y": 1121,
         "size": 177,
@@ -39,5 +39,21 @@
         "y": 489,
         "size": 381,
         "rotation": 180
+    },
+    {
+        "location": "right side forward",
+        "shouldDraw": true,
+        "x": 709,
+        "y": 1200,
+        "size": 177,
+        "rotation": 270
+    },
+    {
+        "location": "left side forward",
+        "shouldDraw": true,
+        "x": 1725,
+        "y": 1200,
+        "size": 177,
+        "rotation": 90
     }
 ]
