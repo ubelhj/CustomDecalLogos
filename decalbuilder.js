@@ -2,10 +2,11 @@ const jimp = require("jimp");
 const fs = require("fs");
 const defaultvalues = require("./defaultvalues.json");
 
-async function draw(logoLoc, logoName, carType, decalName, writeJson) {
+async function draw(logoLoc, logoName, carType, decalName, writeJson, makeDiffuse) {
     var carType = typeof carType  !== 'undefined' ?  carType  : defaultvalues.carID;
     var decalName = typeof decalName  !== 'undefined' ?  decalName  : defaultvalues.decal;
     var writeJson = typeof writeJson  !== 'undefined' ?  writeJson  : true;
+    var writeJson = typeof writeJson  !== 'undefined' ?  makeDiffuse  : true;
 
     console.log(logoLoc);
     console.log(logoName);
@@ -26,10 +27,14 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
 
     //let decalNames = require("./img/" + carType + "/decalnames.json");
 
-    let bodyDecal = await jimp.read("./img/" + carType + "/" + defaultvalues.bodytexture).catch(function (err) {
-        console.log(err);
-        return;
-    });
+    let bodyDecal;
+
+    if (makeDiffuse) {
+        bodyDecal = await jimp.read("./img/" + carType + "/" + defaultvalues.bodytexture).catch(function (err) {
+            console.log(err);
+            return;
+        });
+    }
 
     //console.log("loaded locations");
 
@@ -93,14 +98,18 @@ async function draw(logoLoc, logoName, carType, decalName, writeJson) {
                     this.bitmap.data[idx + 3] = 0;
                 }
             });
-        
-            bodyDecal.composite(logoClone, xLoc, yLoc);
+            
+            if (makeDiffuse) {
+                bodyDecal.composite(logoClone, xLoc, yLoc);
+            }
         }
     }
 
     baseDecal.write(skinLocation + "/" + logoName + "/" + decalName + ".png");
 
-    bodyDecal.write(skinLocation + "/" + logoName + "/diffuse.png");
+    if (makeDiffuse) {
+        bodyDecal.write(skinLocation + "/" + logoName + "/diffuse.png");
+    }
 
     if (writeJson) {
         const jsonVal = {};

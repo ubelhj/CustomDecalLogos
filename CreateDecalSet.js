@@ -47,8 +47,21 @@ async function run(logoLoc, logoName, carType) {
     let jsonVal = {};
     let creator = require("./decalbuilder");
 
+
+
+    await creator.draw(logoLoc, logoName, carType, "basedecal", false, true).then(function() {
+        jsonVal["basedecal"] = {
+            "BodyID": parseInt(carType),
+                "SkinID": 0,
+                "Body": {
+                    "Diffuse": logoName + "/diffuse.png",
+                    "Skin": logoName + "/basedecal.png"
+                }
+            }
+    });
+
     async.eachSeries(decalNames, function(decalName, callback) {
-        creator.draw(logoLoc, logoName, carType, decalName, false).then(function() {
+        creator.draw(logoLoc, logoName, carType, decalName, false, false).then(function() {
             jsonVal[decalName] = {
                 "BodyID": parseInt(carType),
                     "SkinID": 0,
